@@ -1,0 +1,17 @@
+<!-- It's child template inheriting from the parent layout (base.html).
+It displays a list of movies retrieved from the API based on the title provided by the user. -->
+{% extends 'base.html' %}
+
+{% block title %}Select Movie{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="heading">Select Movie</h1>
+    {% for movie in movies["results"]: %}
+        <p>
+        <a href="{{ url_for('get_movie_details', movie_id = movie['id']) }}"> {{ movie['original_title'] }} - {{ movie['release_date'] }}</a>
+        </p>
+    {% endfor %}
+
+</div>
+{% endblock %}
