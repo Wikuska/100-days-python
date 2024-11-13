@@ -1,11 +1,14 @@
 from flask import Flask, render_template
 from post import Post
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 
 # Get a JSON response from the API containing all article elements
-posts = requests.get(url = "https://api.npoint.io/c790b4d5cab58020d391").json()
+posts = requests.get(url = os.getenv("POSTS_API")).json()
 
 # Create Post objects for each article from the API response and store them in a list
 post_objects = []
