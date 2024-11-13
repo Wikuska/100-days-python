@@ -111,12 +111,7 @@ def post_new_cafe():
 # HTTP PUT/PATCH - Update Record
 @app.route("/update-price/<cafe_id>", methods = ["PATCH"])
 def update_price(cafe_id):
-    """Endpoint to update the coffee price of a specific cafe by its ID.
-
-    Path Parameter:
-        cafe_id (int): ID of cafe to update
-    Query Parameter:
-        new-price (str): New price of the coffee"""
+    """Endpoint to update the coffee price of a specific cafe by its ID."""
     updated_price = request.args.get("new-price")
     cafe = db.session.get(Cafe, cafe_id)
     if cafe:
@@ -131,12 +126,7 @@ def update_price(cafe_id):
 # HTTP DELETE - Delete Record
 @app.route("/report-closed/<cafe_id>", methods = ["DELETE"])
 def delete_cafe(cafe_id):
-    """Endpoint to delete a cafe from the database using its ID.
-
-    Path Parameter:
-        cafe_id (int): ID of cafe to delete
-    Query Parameter:
-        api-key (str): API key required to authorise the delete action"""
+    """Endpoint to delete a cafe from the database using its ID."""
     api_key = request.args.get("api-key")
     if api_key == "TopSecretAPIKey":
         cafe = db.session.get(Cafe, cafe_id)
