@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import CreatePostForm, RegisterForm
+from forms import CreatePostForm, RegisterForm, LoginForm
 import os
 from dotenv import load_dotenv
 
@@ -22,6 +22,10 @@ ckeditor = CKEditor(app)
 Bootstrap5(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
 
 # Create database
 class Base(DeclarativeBase):
@@ -48,8 +52,8 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = mapped_column(String(1000), nullable=False)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 @app.route('/register', methods = ("POST", "GET"))
@@ -57,26 +61,45 @@ def register():
     """Register route rendering a register.html template and passing in register_form. Handles user registration and processing form submissions"""
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        new_user = User(
-            email = register_form.email.data,
-            password = generate_password_hash(register_form.password.data, method = "pbkdf2", salt_length = 8),
-            name = register_form.name.data
-        )
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user)
-        return redirect(url_for("get_all_posts"))
+        user_exists = db.session.execute(db.select(User).where(User.email == register_form.email.data)).scalar()
+        if not user_exists:
+            new_user = User(
+                email = register_form.email.data,
+                password = generate_password_hash(register_form.password.data, method = "pbkdf2", salt_length = 8),
+                name = register_form.name.data
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            return redirect(url_for("get_all_posts"))
+        else:
+            flash("You are already registered with this email. Log in instead!")
+            return redirect(url_for("login"))
     return render_template("register.html", form = register_form)
 
 
-# TODO: Retrieve a user from the database based on their email. 
-@app.route('/login')
+@app.route('/login', methods = ("POST", "GET"))
 def login():
-    return render_template("login.html")
+    """Login route rendering a login.html template and passing in login_form. Handles user login by rendering the login_form, validating input, and processing login logic"""
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        user = db.session.execute(db.select(User).where(User.email == login_form.email.data)).scalar()
+        if not user:
+            flash("Email not found")
+            return redirect(url_for('login'))
+        if not check_password_hash(user.password, login_form.password.data):
+            flash("Wrong password")
+            return redirect(url_for('login'))
+        else:
+            login_user(user)
+            return redirect(url_for("get_all_posts"))
+    return render_template("login.html", form = login_form)
 
 
 @app.route('/logout')
 def logout():
+    """Logout route logging out current user and redirecting to main page """
+    logout_user()
     return redirect(url_for('get_all_posts'))
 
 
