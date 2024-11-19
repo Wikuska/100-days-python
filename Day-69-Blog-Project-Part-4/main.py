@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import CreatePostForm, RegisterForm, LoginForm
+from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 import os
 from dotenv import load_dotenv
 
@@ -26,6 +26,8 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
+
+gravatar = Gravatar(app)
 
 # Create database
 class Base(DeclarativeBase):
@@ -45,6 +47,7 @@ class BlogPost(db.Model):
     date: Mapped[str] = mapped_column(String(250), nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
+    comments = relationship("Comment", back_populates = "parent_post")
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
@@ -53,9 +56,19 @@ class User(db.Model, UserMixin):
     password: Mapped[str] = mapped_column(String(1000), nullable=False)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     posts = relationship("BlogPost", back_populates="author")
+    comments = relationship("Comment", back_populates="comment_author")
 
-# with app.app_context():
-#     db.create_all()
+class Comment(db.Model):
+    __tablename__ = "comments"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    text: Mapped[str] = mapped_column(String(1000))
+    author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
+    comment_author = relationship("User", back_populates = "comments")
+    post_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("blog_posts.id"))
+    parent_post = relationship("BlogPost", back_populates = "comments")
+
+with app.app_context():
+    db.create_all()
 
 
 def admin_only(func):
@@ -94,7 +107,7 @@ def register():
 
 @app.route('/login', methods = ("POST", "GET"))
 def login():
-    """Login route rendering a login.html template and passing in login_form. Handles user login by rendering the login_form, validating input, and processing login logic"""
+    """Login route rendering a login.html template. Handles user login by rendering the login_form, validating input, and processing login logic"""
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = db.session.execute(db.select(User).where(User.email == login_form.email.data)).scalar()
@@ -125,10 +138,24 @@ def get_all_posts():
 
 
 # TODO: Allow logged-in users to comment on posts
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
+    """Show_post route rendering a post.html template with requested_post and CommentForm. Handles comments submission"""
     requested_post = db.get_or_404(BlogPost, post_id)
-    return render_template("post.html", post=requested_post)
+    form = CommentForm()
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            new_comment = Comment(
+                text = form.comment.data,
+                comment_author = current_user,
+                parent_post = requested_post
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+        else:
+            flash("You must be logged in to submit comments")
+            return redirect(url_for("login"))
+    return render_template("post.html", post=requested_post, form=form)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
