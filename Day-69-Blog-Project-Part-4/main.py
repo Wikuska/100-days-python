@@ -56,6 +56,18 @@ class User(db.Model, UserMixin):
 #     db.create_all()
 
 
+def admin_only(func):
+    """Decorator to restrict access to admin-only routes"""
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return redirect(url_for("login"))
+        if current_user.id != 1:
+            abort(403)
+        return func(*args, **kwargs)
+    return decorated_view
+
+
 @app.route('/register', methods = ("POST", "GET"))
 def register():
     """Register route rendering a register.html template and passing in register_form. Handles user registration and processing form submissions"""
@@ -117,8 +129,8 @@ def show_post(post_id):
     return render_template("post.html", post=requested_post)
 
 
-# TODO: Use a decorator so only an admin user can create a new post
 @app.route("/new-post", methods=["GET", "POST"])
+@admin_only
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
@@ -136,8 +148,8 @@ def add_new_post():
     return render_template("make-post.html", form=form)
 
 
-# TODO: Use a decorator so only an admin user can edit a post
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+@admin_only
 def edit_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
     edit_form = CreatePostForm(
@@ -158,8 +170,8 @@ def edit_post(post_id):
     return render_template("make-post.html", form=edit_form, is_edit=True)
 
 
-# TODO: Use a decorator so only an admin user can delete a post
 @app.route("/delete/<int:post_id>")
+@admin_only
 def delete_post(post_id):
     post_to_delete = db.get_or_404(BlogPost, post_id)
     db.session.delete(post_to_delete)
