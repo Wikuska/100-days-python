@@ -38,19 +38,21 @@ db.init_app(app)
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
+    author = relationship("User", back_populates = "posts")
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
     date: Mapped[str] = mapped_column(String(250), nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
-    author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
 class User(db.Model, UserMixin):
-    __tablename__ = "user"
+    __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(1000), nullable=False)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
+    posts = relationship("BlogPost", back_populates="author")
 
 # with app.app_context():
 #     db.create_all()
