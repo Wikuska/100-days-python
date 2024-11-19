@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Initialize Flask app and configure Flask-login
+# Initialize Flask app, configure Flask-login and gravatar
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("APP_KEY")
 ckeditor = CKEditor(app)
@@ -85,7 +85,7 @@ def admin_only(func):
 
 @app.route('/register', methods = ("POST", "GET"))
 def register():
-    """Register route rendering a register.html template and passing in register_form. Handles user registration and processing form submissions"""
+    """Route handling user registration by rendering template with RegisterForm and adding new User to database on validated form submission"""
     register_form = RegisterForm()
     if register_form.validate_on_submit():
         user_exists = db.session.execute(db.select(User).where(User.email == register_form.email.data)).scalar()
@@ -107,7 +107,7 @@ def register():
 
 @app.route('/login', methods = ("POST", "GET"))
 def login():
-    """Login route rendering a login.html template. Handles user login by rendering the login_form, validating input, and processing login logic"""
+    """Route handling user login by rendering template with LoginForm, validating input, and processing login logic"""
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = db.session.execute(db.select(User).where(User.email == login_form.email.data)).scalar()
@@ -132,12 +132,12 @@ def logout():
 
 @app.route('/')
 def get_all_posts():
+    """Get-all-posts route rendering index.html template with all posts from database"""
     result = db.session.execute(db.select(BlogPost))
     posts = result.scalars().all()
     return render_template("index.html", all_posts=posts)
 
 
-# TODO: Allow logged-in users to comment on posts
 @app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
     """Show_post route rendering a post.html template with requested_post and CommentForm. Handles comments submission"""
@@ -161,6 +161,7 @@ def show_post(post_id):
 @app.route("/new-post", methods=["GET", "POST"])
 @admin_only
 def add_new_post():
+    """Route handling new post creation. Renders template with CreatePostForm and creates new BlogPost in database on validated form submission"""
     form = CreatePostForm()
     if form.validate_on_submit():
         new_post = BlogPost(
@@ -180,6 +181,7 @@ def add_new_post():
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 @admin_only
 def edit_post(post_id):
+    """Route handling edition of an existing BlogPost, fetches the post by post_id, pre-fills the form and updates BlogPost in database on validated form submission"""
     post = db.get_or_404(BlogPost, post_id)
     edit_form = CreatePostForm(
         title=post.title,
@@ -202,6 +204,7 @@ def edit_post(post_id):
 @app.route("/delete/<int:post_id>")
 @admin_only
 def delete_post(post_id):
+    """Fetches the post by post_id and deletes it from database"""
     post_to_delete = db.get_or_404(BlogPost, post_id)
     db.session.delete(post_to_delete)
     db.session.commit()
