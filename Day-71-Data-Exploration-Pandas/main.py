@@ -52,3 +52,11 @@ print(high_risk[['Undergraduate Major', 'Spread']].head())
 # Sorting by highest values in the 90th percentile
 high_potential = clean_df.sort_values("Mid-Career 90th Percentile Salary", ascending = False)
 print(high_potential[['Undergraduate Major', 'Mid-Career 90th Percentile Salary']].head())
+
+# Find how many majors are in each category
+print(clean_df.groupby('Group').count())
+
+# Format number output
+pd.options.display.float_format = '{:,.2f}'.format 
+# Find avarage salary by group
+print(clean_df.groupby('Group').mean())
