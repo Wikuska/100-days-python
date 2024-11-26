@@ -1,0 +1,27 @@
+<!-- It's child template inheriting from the parent layout (base.html).
+This page displays form element which components were created and passed here from main.py-->
+{% extends 'base.html' %}
+
+<!-- Importing function which allows us to fast create form -->
+{% from 'bootstrap5/form.html' import render_form %}
+
+<!-- Set the page title specific to this child page -->
+{% block title %}Add A New Cafe{% endblock %}
+
+<!-- Set the page body specific to this child page -->
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+
+      <h1>Add a new cafe into the database</h1>
+      <!-- Rendering form using form object passed from add_cafe function in main.py -->
+      {{ render_form(form) }}
+
+	  <p class="space-above"><a href="#">See all cafes</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
