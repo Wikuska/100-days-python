@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Portfolio page</title>
+        <link rel="stylesheet" href="./style.css"/>
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <div class="left-side-links">
+                    <li><a href="#main">About Me</a></li>
+                    <li><a href="#projects">My Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </div>
+                <div class="right-side-links">
+                    <li><a href="https://github.com/">Github</a></li>
+                    <li><a href="https://www.linkedin.com/">Linkedin</a></li>
+                </div>
+            </ul>
+        </nav>
+        <div id="main">
+            <div class="user-picture">
+                <img src="images/user-picture.jpg"/>
+            </div>
+            <div class="user-description">
+                <p>
+                    There was something in the sky. What exactly was up there wasn't immediately clear. 
+                    But there was definitely something in the sky and it was getting bigger and bigger.
+                </p>
+            </div>
+            <div class="latest-projects">
+                <a href="#projects">Check out my latest projects!</a>
+            </div>
+        </div>
+        <div id="projects">
+            <div class="topic-bar">
+                <button class="topic-button" data-topic="web">Web Development</button>
+                <button class="topic-button" data-topic="data">Data Science</button>
+                <button class="topic-button" data-topic="game">Small Games</button>
+            </div>
+
+            <div class="projects-display" id="projects-display">
+                
+            </div>
+        </div>
+        <div id="contact">
+            <div class="contact-me">
+                <p>Send me a message!</p>
+            </div>
+            <form id="contactForm" name="sendMessage" action="" method="post">
+                <div class="form-name">
+                    <input name="name" type="text" placeholder="Enter your name" required/>
+                    <label for="name">Name</label>
+                </div>
+                <div class="form-email">
+                    <input name="email" type="email" placeholder="Enter your email" required/>
+                    <label for="name">Email address</label>
+                </div>
+                <div class="form-msg">
+                    <input name="message" type="text" placeholder="Write your message here" required/>
+                    <label for="name">Message</label>
+                </div>
+                <br />
+                <button class="form-button" type="submit">Send Message</button>
+            </form>
+        </div>
+    </body>
+
+</html>
