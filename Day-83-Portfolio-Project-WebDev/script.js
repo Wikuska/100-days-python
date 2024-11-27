@@ -28,8 +28,8 @@ const projects = {
         },
         {
             title: "Flight Deals Finder",
-            description: "A program that look through flight connection between oririn city and locations typed in google sheets file in next 6 months. When any of connection price is lower than goal price in file, an email notification with details of flight is sent.",
-            image: "images/flightdeals.JPG",
+            description: "A program that look through flight connection between oririn city and locations typed in google sheets file in next 6 months. If any connection price is lower than goal price in file, an email notification is sent.",
+            image: "images/flightdeals.jpg",
             github: "https://github.com/Wikuska",
         }
     ],
@@ -49,13 +49,13 @@ const projects = {
         {
             title: "Road Crossing",
             description: "Game where users job is to move turtle to other side of road without being hit by a car. Every level cars speed goeas up, when turtle is hit game is over.",
-            image: "images/roadcrossing.JPG",
+            image: "images/roadcrossing.jpg",
             github: "https://github.com/Wikuska",
         },
         {
             title: "Quizz Game",
             description: "Quizz game with simple UI, questions are collected from Open Trivia Database, their number and category can be changed.",
-            image: "images/quizz.JPG",
+            image: "images/quizz.jpg",
             github: "https://github.com/Wikuska",
         }
     ]
@@ -75,9 +75,13 @@ function displayProjects(topic) {
         projectCard.classList.add("project-card");
         projectCard.innerHTML = `
             <img src="${project.image}" alt="${project.title}">
+            <div class = "project-card-description-bg">
+            <div class = "project-card-description">
             <h3>${project.title}</h3>
             <p>${project.description}</p>
             <a href="${project.github}" target="_blank">View on GitHub</a>
+            </div>
+            </div>
         `;
         projectContainer.appendChild(projectCard);
     });
@@ -91,3 +95,19 @@ document.querySelectorAll(".topic-button").forEach(button => {
 });
 // Display the first topic's projects by default
 displayProjects("web");
+
+
+let previousScrollPosition = window.scrollY; 
+const navbar = document.getElementById("navbar");
+
+window.addEventListener("scroll", () => {
+    const currentScrollPosition = window.scrollY; 
+
+    if (currentScrollPosition > previousScrollPosition) {
+        navbar.style.top = "-60px"; 
+    } else {
+        navbar.style.top = "0"; 
+    }
+
+    previousScrollPosition = currentScrollPosition;
+});
