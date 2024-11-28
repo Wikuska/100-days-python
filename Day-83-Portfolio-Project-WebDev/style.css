@@ -22,6 +22,8 @@ body {
     color: white;
     text-decoration: none;
     margin: 0 15px;
+    font-family: "Merriweather", serif;
+    font-weight: 500;
 }
 
 .right-side-links a{
@@ -33,36 +35,62 @@ body {
 
 #main {
     display: grid;
-    padding: 50px 10px;
+    padding: 60px 10px 10px 10px;
     justify-content: center; 
     align-items: center;
 }
 
 .user-info {
     display: flex;
+    flex-direction: row;
     justify-content: center; 
     align-items: center; 
+    gap: 50px;
 }
 
 .user-picture img{
     width: 300px;
     border: 10px solid #867070;
     border-radius: 50%;
-    margin-right: 50px;
+    transition: all 0.3s ease;
 }
 
 .user-description {
     width: 620px;
-    font-size: 20px;
+    font-size: 18px;
+    font-family: "Lora", serif;
+}
+
+@media (max-width: 1000px) {
+    .user-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-picture img {
+        width: 200px;
+        margin-right: 0;
+    }
+
+    .user-description {
+        width: 100%;
+        font-size: 18px;
+    }
 }
 
 .user-description p {
     margin-bottom: 10px;
 }
 
-#projects h2 {
+h2 {
     display: flex;
     justify-content: center; 
+    margin:  50px 0px;
+    font-size: 60px;
+    font-family: "Lora", serif;
+    font-weight: 500;
+    background-color: #e4d0d0;
+    
 }
 
 .topic-bar{
@@ -73,6 +101,7 @@ body {
 
 .topic-bar button {
   align-items: center;
+  font-family: "Lora", serif;
   background-color: #867070;
   border: 0;
   border-radius: 100px;
@@ -81,7 +110,7 @@ body {
   cursor: pointer;
   display: inline-flex;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   justify-content: center;
   line-height: 20px;
   max-width: 480px;
@@ -96,6 +125,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
   margin-left: 10px;
+  margin-bottom: 5px;
 }
 
 .topic-bar button:hover,
@@ -116,6 +146,17 @@ body {
     gap: 10px;
 }
 
+@media (max-width: 1300px) {
+    .projects-display {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .project-card {
     display: flex;
     background-color: #867070;
@@ -128,14 +169,14 @@ body {
 .project-card img {
     height: 155px;
     margin: 15px;
-    border: 10px solid #d5b4b4;
+    border: 10px solid #e4d0d0;
     border-radius: 15px;
     justify-content: center; 
 }
 
 .project-card-description-bg {
     margin: 15px;
-    background-color: #d5b4b4;
+    background-color: #e4d0d0;
     border-radius: 15px;
 }
 
@@ -143,6 +184,7 @@ body {
     padding: 10px;
     font-size: 17px;
     position: relative;
+    font-family: "Lora", serif;
 }
 
 .project-card-description h3{
@@ -161,6 +203,7 @@ body {
     background-color: #867070;
     border-radius: 15px;
     float: right;
+    font-size: 17px;
     margin-bottom: 5px ;
 }
 
