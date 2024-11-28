@@ -68,16 +68,24 @@
             <div class="contact-me">
                 <h2>SEND ME A MESSAGE!</h2>
             </div>
+            <div class="contact-below-header">
+                <h3>One of the projects caught your eye? You want to ask me a question? Feel free to contact me by feeling out the form below or message me on my socials!</h3>
+            </div>
             <div class="contact-form">
                 <div class="contact-form-upper">
-                    {{ form.name.label(class="form-label") }}
-                    {{ form.name(class="name-container") }}
-
+                    <div class="contact-form-name">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="upper-container") }}
+                    </div>
+                    <div class="contact-form-email">
                     {{ form.email.label(class="form-label") }}
-                    {{ form.email(class="email-container") }}    
+                    {{ form.email(class="upper-container") }}
+                    </div>   
                 </div>
-                {{ form.message.label(class="form-label") }}
-                {{ form.message(class="message-container") }}
+                <div class="contact-form-msg">
+                    {{ form.message.label(class="form-label") }}
+                    {{ form.message(class="message-container") }}
+                </div>
             </div>
         </div>
         <script src="../static/script.js"></script>

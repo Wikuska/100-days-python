@@ -82,7 +82,7 @@ body {
     margin-bottom: 10px;
 }
 
-h2 {
+#projects h2 {
     display: flex;
     justify-content: center; 
     margin:  50px 0px;
@@ -182,7 +182,7 @@ h2 {
 
 .project-card-description{
     padding: 10px;
-    font-size: 17px;
+    font-size: 18px;
     position: relative;
     font-family: "Lora", serif;
 }
@@ -205,6 +205,82 @@ h2 {
     float: right;
     font-size: 17px;
     margin-bottom: 5px ;
+}
+
+.contact-me h2 {
+    display: flex;
+    justify-content: center; 
+    margin:  50px 0px 10px 0px;
+    font-size: 60px;
+    font-family: "Lora", serif;
+    font-weight: 500;
+    background-color: #e4d0d0;
+    
+}
+
+.contact-below-header {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    font-family: "Lora", serif;
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 30px;
+    padding: 5px 0px;
+    background-color: #e4d0d0;
+}
+
+.contact-below-header h3 {
+    text-align: center;
+}
+
+.contact-form {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+    font-family: "Lora", serif;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.contact-form-upper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-bottom: 10px;
+}
+
+.contact-form-upper div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.upper-container {
+    width: 500px;
+    height: 50px;
+    border: 7px solid #867070;
+    border-radius: 15px;
+    padding: 7px;
+    font-size: 18px;
+    font-family: "Lora", serif;
+}
+
+.contact-form-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.message-container {
+    width: 1020px;
+    height: 200px;
+    border: 7px solid #867070;
+    border-radius: 15px;
+    padding: 7px;
+    font-size: 18px;
+    font-family: "Lora", serif;
 }
 
 a:hover{
