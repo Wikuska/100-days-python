@@ -3,19 +3,19 @@ const projects = {
         {
             title: "Blog Website",
             description: "Simple and functional blog website. Users can register, log in and leave comments. Admin can also add and delete posts.",
-            image: "images/blog.JPG",
+            image: "../static/assets/images/blog.JPG",
             github: "https://github.com/Wikuska/100-days-python/tree/main/Day-69-Blog-Project-Part-4",
         },
         {
             title: "Coffee&Wifi",
             description: "Website that collects information about cafes and amenities available there for working on electronic devices.",
-            image: "images/coffeewifi.JPG",
+            image: "../static/assets/images/coffeewifi.JPG",
             github: "https://github.com/Wikuska/100-days-python/tree/main/Day-62-Coffe%26Wifi-Page",
         },
         {
             title: "My Top Movies Website",
             description: "Website collecting my Top 10 movies with ratings. It is possible to add new movies using the API and manage existing ones.",
-            image: "images/topmovies.JPG",
+            image: "../static/assets/images/topmovies.JPG",
             github: "https://github.com/Wikuska/100-days-python/tree/main/Day-64-My-Top-Movies-Website",
         }
     ],
@@ -23,13 +23,13 @@ const projects = {
         {
             title: "Stock Alert",
             description: "A program that monitors a designated share on the market. In the event of a significant drop or increase in its price, it sends an email notification.",
-            image: "images/stockalert.JPG",
+            image: "../static/assets/images/stockalert.JPG",
             github: "https://github.com/Wikuska",
         },
         {
             title: "Flight Deals Finder",
             description: "A program that look through flight connection between oririn city and locations typed in google sheets file in next 6 months. If any connection price is lower than goal price in file, an email notification is sent.",
-            image: "images/flightdeals.jpg",
+            image: "../static/assets/images/flightdeals.jpg",
             github: "https://github.com/Wikuska",
         }
     ],
@@ -37,25 +37,25 @@ const projects = {
         {
             title: "Snake Game",
             description: "Simple snake game made with Turtle module in python. Monitors game score, saves high score value for future games.",
-            image: "images/snake.JPG",
+            image: "../static/assets/images/snake.JPG",
             github: "https://github.com/Wikuska",
         },
         {
             title: "Turtle Races",
             description: "Game where colorful turtles race to finish line. User can try to guess which colour will be the first before game starts.",
-            image: "images/races.JPG",
+            image: "../static/assets/images/races.JPG",
             github: "https://github.com/Wikuska",
         },
         {
             title: "Road Crossing",
             description: "Game where users job is to move turtle to other side of road without being hit by a car. Every level cars speed goeas up, when turtle is hit game is over.",
-            image: "images/roadcrossing.jpg",
+            image: "../static/assets/images/roadcrossing.jpg",
             github: "https://github.com/Wikuska",
         },
         {
             title: "Quizz Game",
             description: "Quizz game with simple UI, questions are collected from Open Trivia Database, their number and category can be changed.",
-            image: "images/quizz.jpg",
+            image: "../static/assets/images/quizz.jpg",
             github: "https://github.com/Wikuska",
         }
     ]

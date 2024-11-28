@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <title>Portfolio page</title>
-        <link rel="stylesheet" href="./style.css"/>
+        <link rel="stylesheet" href="../static/style.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +33,7 @@
         <div id="main">
             <div class="user-info">
                 <div class="user-picture">
-                    <img src="images/user-picture.jpg"/>
+                    <img src="../static/assets/images/user-picture.jpg"/>
                 </div>
                 <div class="user-description">
                     <p>
@@ -67,24 +68,19 @@
             <div class="contact-me">
                 <h2>SEND ME A MESSAGE!</h2>
             </div>
-            <form id="contactForm" name="sendMessage" action="" method="post">
-                <div class="form-name">
-                    <input name="name" type="text" placeholder="Enter your name" required/>
-                    <label for="name">Name</label>
+            <div class="contact-form">
+                <div class="contact-form-upper">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="name-container") }}
+
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="email-container") }}    
                 </div>
-                <div class="form-email">
-                    <input name="email" type="email" placeholder="Enter your email" required/>
-                    <label for="name">Email address</label>
-                </div>
-                <div class="form-msg">
-                    <input name="message" type="text" placeholder="Write your message here" required/>
-                    <label for="name">Message</label>
-                </div>
-                <br />
-                <button class="form-button" type="submit">Send Message</button>
-            </form>
+                {{ form.message.label(class="form-label") }}
+                {{ form.message(class="message-container") }}
+            </div>
         </div>
-        <script src="script.js"></script>
+        <script src="../static/script.js"></script>
     </body>
 
 </html>
