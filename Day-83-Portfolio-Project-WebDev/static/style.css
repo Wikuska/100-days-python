@@ -283,6 +283,27 @@ body {
     font-family: "Lora", serif;
 }
 
+.footer {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+    font-family: "Lora", serif;
+    background-color: #e4d0d0;
+    margin: 40px 0px 0px 0px;
+    padding: 15px 0px;
+    font-weight: 500;
+}
+
+.footer a {
+    text-decoration: none;
+    color: black;
+}
+
+.footer a:hover{
+    color: #645555;
+}
+
 a:hover{
     color: #e4d0d0;
 }
