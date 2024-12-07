@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for, jsonify
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
@@ -51,6 +51,20 @@ def home():
             flash("Email sent!")
             return redirect(url_for("home"))
     return render_template("index.html", form = form)
+
+@app.route("/api/projects/<topic>", methods=["GET"])
+def get_projects(topic):
+    projects = Project.query.filter_by(topic=topic).all()
+    projects_dict = [
+        {
+            "title": project.title,
+            "description": project.description,
+            "image": project.image,
+            "github": project.github
+        }
+        for project in projects
+    ]
+    return jsonify(projects_dict)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
