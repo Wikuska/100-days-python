@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
@@ -8,6 +8,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String
 import os
 from dotenv import load_dotenv
+import smtplib
 
 load_dotenv()
 
@@ -35,9 +36,20 @@ class EmailForm(FlaskForm):
     message = TextAreaField("Message", validators=[DataRequired()])
     submit = SubmitField("Send a message")
 
-@app.route("/")
+@app.route("/", methods = ("POST", "GET"))
 def home():
     form = EmailForm()
+    if form.validate_on_submit():
+        with smtplib.SMTP("smtp.gmail.com") as connection:
+            connection.starttls()
+            connection.login(user = os.getenv('MY_MAIL'), password = os.getenv('MY_PASSWORD'))
+            connection.sendmail(
+                from_addr = os.getenv('MY_MAIL'),
+                to_addrs = os.getenv('MY_MAIL'),
+                msg = f"Subject: New portfolio mail\n\nFrom: {form.name.data}\nUser email: {form.email.data}\nMessage: {form.message.data}"
+            )
+            flash("Email sent!")
+            return redirect(url_for("home"))
     return render_template("index.html", form = form)
 
 if __name__ == "__main__":

@@ -71,22 +71,33 @@
             <div class="contact-below-header">
                 <h3>One of the projects caught your eye? You want to ask me a question? Feel free to contact me by feeling out the form below or message me on my socials!</h3>
             </div>
-            <div class="contact-form">
-                <div class="contact-form-upper">
-                    <div class="contact-form-name">
-                        {{ form.name.label(class="form-label") }}
-                        {{ form.name(class="upper-container") }}
+            <form method="post" action="{{ url_for('home') }}">
+                {{ form.hidden_tag() }}
+                <div class="contact-form">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p class="flash">{{ message }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <div class="contact-form-upper">
+                        <div class="contact-form-name">
+                            {{ form.name.label(class="form-label") }}
+                            {{ form.name(class="upper-container") }}
+                        </div>
+                        <div class="contact-form-email">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="upper-container") }}
+                        </div>   
                     </div>
-                    <div class="contact-form-email">
-                    {{ form.email.label(class="form-label") }}
-                    {{ form.email(class="upper-container") }}
-                    </div>   
+                    <div class="contact-form-msg">
+                        {{ form.message.label(class="form-label") }}
+                        {{ form.message(class="message-container") }}
+                    </div>
+                    {{ form.submit(class="submit-button") }}
                 </div>
-                <div class="contact-form-msg">
-                    {{ form.message.label(class="form-label") }}
-                    {{ form.message(class="message-container") }}
-                </div>
-            </div>
+            </form>
         </div>
         <footer class="footer">
             <p>Copyright &copy;Portfolio page 2024</p>
