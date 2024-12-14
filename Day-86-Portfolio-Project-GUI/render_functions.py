@@ -1,8 +1,6 @@
 from tkinter import *
-import random
 from test_texts import test_texts, practice_texts
-from best_scores import scores
-
+from helper_functions import check_text_correctness, generate_new_text, get_random_text
 MAIN_COLOR = "#919191"
 WIDGETS_COLOR = "#707070"
 HEADER_FONT = ("Open Sans", 23, "bold")
@@ -37,10 +35,10 @@ def render_speed_practice(root):
     speed_practice_frame = Frame(root, bg=MAIN_COLOR)
     speed_practice_frame.pack(fill='both', expand=True)
 
-    title_label = title_label = Label(speed_practice_frame, text = "Practice your speed without time pression", bg = WIDGETS_COLOR, font = HEADER_FONT)
+    title_label = Label(speed_practice_frame, text = "Practice your speed without time pression", bg = WIDGETS_COLOR, font = HEADER_FONT)
     title_label.grid(column = 0, row = 0, columnspan = 3, sticky="nsew")
 
-    main_text_label = Label(speed_practice_frame, text = random.choice(practice_texts), font = BUTTON_FONT, bg = WIDGETS_COLOR, wraplength = 700)
+    main_text_label = Label(speed_practice_frame, text = get_random_text(practice_texts), font = BUTTON_FONT, bg = WIDGETS_COLOR, wraplength = 700)
     main_text_label.grid(column = 0, row = 2,columnspan = 3, rowspan = 2, sticky="nsew")
 
     user_text_entry = Entry(speed_practice_frame, font = BUTTON_FONT)
@@ -49,10 +47,10 @@ def render_speed_practice(root):
     main_menu_button = Button(speed_practice_frame, text = "Main menu", bg = WIDGETS_COLOR, font = ("Open Sans", 14, "bold"),bd = 5, relief = "solid", command = lambda: render_new_frame(root, render_main_menu))
     main_menu_button.grid(column = 0, row = 7, sticky="nsew")
 
-    check_text_button = Button(speed_practice_frame, text = "Check your answer", bg = WIDGETS_COLOR, font = ("Open Sans", 14, "bold"),bd = 5, relief = "solid")
+    check_text_button = Button(speed_practice_frame, text = "Check your answer", bg = WIDGETS_COLOR, font = ("Open Sans", 14, "bold"),bd = 5, relief = "solid", command = lambda: check_text_correctness(title_label, main_text_label, user_text_entry.get()))
     check_text_button.grid(column = 1, row = 7, sticky="nsew", padx = 10)
 
-    next_text_button = Button(speed_practice_frame, text = "Next text", bg = WIDGETS_COLOR, font = ("Open Sans", 14, "bold"),bd = 5, relief = "solid")
+    next_text_button = Button(speed_practice_frame, text = "Next text", bg = WIDGETS_COLOR, font = ("Open Sans", 14, "bold"),bd = 5, relief = "solid", command = lambda: generate_new_text(title_label, main_text_label, user_text_entry, practice_texts))
     next_text_button.grid(column = 2, row = 7, sticky="nsew")
 
     speed_practice_frame.grid_columnconfigure((0,1,2), weight = 1)
@@ -67,7 +65,7 @@ def render_speed_test(root):
     title_label = Label(speed_test_frame, text = "Timer starts as you start typing", bg = WIDGETS_COLOR, font = HEADER_FONT)
     title_label.grid(column = 1, row = 0, columnspan = 5, sticky="nsew")
 
-    main_text_label = Label(speed_test_frame, text = random.choice(test_texts), bg = WIDGETS_COLOR, font = BUTTON_FONT, wraplength = 900)
+    main_text_label = Label(speed_test_frame, text = get_random_text(test_texts), bg = WIDGETS_COLOR, font = BUTTON_FONT, wraplength = 900)
     main_text_label.grid(column = 1, row = 2, columnspan = 5, rowspan = 2, sticky="nsew")
 
     user_text_entry = Entry(speed_test_frame, font = BUTTON_FONT)
