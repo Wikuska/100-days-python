@@ -11,9 +11,9 @@ class Paddle:
         self.paddle.teleport(0, -250)
 
     def go_left(self):
-        if self.paddle.xcor() > -320:
+        if self.paddle.xcor() > -340:
             self.paddle.backward(30)
 
     def go_right(self):
-        if self.paddle.xcor() < 320:
+        if self.paddle.xcor() < 340:
             self.paddle.forward(30)
