@@ -31,8 +31,7 @@ screen.listen()
 screen.onkeypress(paddle.go_left, "Left")
 screen.onkeypress(paddle.go_right, "Right")
 
-game_is_on = True
-while game_is_on:
+while True:
     screen.update()
     ball.move()
     # Detect collision with paddle
@@ -61,6 +60,16 @@ while game_is_on:
     # Detect when ball miss paddle
     if ball.ycor() < -285:
         ball.reset_ball()
-                        
+
+    # Detect when player finish game
+    if bricks == []:
+        break
+
+
+paddle.hideturtle()
+ball.hideturtle()
+ball.goto(0,0)
+ball.write("Game won!", align="center", font=("Arial", 24, "bold"))   
+screen.update()              
 
 screen.mainloop()
