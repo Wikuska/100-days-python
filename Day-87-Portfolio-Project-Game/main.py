@@ -10,7 +10,7 @@ def create_bricks():
         for col in range(9):
             brick = Brick()
             x = -360 + col * 90
-            y = 280 - row * 50
+            y = 280 - row * 30
             brick.goto(x, y)
             bricks.append(brick)
 
@@ -35,9 +35,32 @@ game_is_on = True
 while game_is_on:
     screen.update()
     ball.move()
+    # Detect collision with paddle
     if ball.ycor() > -240 and ball.ycor() < -230 and ball.distance(paddle) < 60:
         ball.y_bounce()
+
+    # Detect collision with side wall
+    if ball.xcor() > 405 or ball.xcor() < -405:
+        ball.x_bounce()
+
+    # Detect collision with top wall
+    if ball.ycor() > 285:
+        ball.y_bounce()
     
+    # Detect collision with brick
+    for brick in bricks:
+        if ball.xcor() > (brick.xcor() - 40) and ball.xcor() < (brick.xcor() + 40) and ball.distance(brick) < 40:
+            ball.y_bounce()
+            brick.hideturtle()
+            bricks.remove(brick)
+        if ball.ycor() > (brick.ycor() - 10) and ball.ycor() < (brick.ycor() + 10) and ball.distance(brick) < 60:
+            ball.x_bounce()
+            brick.hideturtle()
+            bricks.remove(brick)
+
+    # Detect when ball miss paddle
+    if ball.ycor() < -285:
+        ball.reset_ball()
                         
 
 screen.mainloop()
