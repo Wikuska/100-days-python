@@ -39,7 +39,7 @@ def text_to_speech(text):
     )
     return response
 
-def save_file(title, response):
+def choose_save_path(title):
     save_file_path = filedialog.asksaveasfilename(
         defaultextension = ".mp3",
         filetypes = [("MP3 files", ".mp3"), ("All files", "*.*")],
@@ -48,10 +48,14 @@ def save_file(title, response):
     )
 
     if save_file_path:
-        with open(save_file_path, "wb") as file:
-            for chunk in response:
-                if chunk:
-                    file.write(chunk)
-        print("New audio file was saved successfully")
+        return save_file_path
     else:
-        print("Save operation was canceled")
+        print("No save path selected")
+        return None
+
+def save_file(save_path, response):
+    with open(save_path, "wb") as file:
+        for chunk in response:
+            if chunk:
+                file.write(chunk)
+    return print("New audio file was saved successfully")
